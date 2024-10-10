@@ -1,6 +1,6 @@
-// clippy1.rs
+// clippy1.rsClippy
 //
-// The Clippy tool is a collection of lints to analyze your code so you can
+// The  tool is a collection of lints to analyze your code so you can
 // catch common mistakes and improve your Rust code.
 //
 // For these exercises the code will fail to compile when there are clippy
@@ -9,12 +9,10 @@
 // Execute `rustlings hint clippy1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::f32;
 
 fn main() {
-    let pi = 3.14f32;
+    let pi = f32::consts::PI;
     let radius = 5.00f32;
 
     let area = pi * f32::powi(radius, 2);

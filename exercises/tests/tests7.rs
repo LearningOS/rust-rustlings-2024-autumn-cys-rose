@@ -34,7 +34,8 @@
 // Execute `rustlings hint tests7` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// 一些依赖项既不能通过 Cargo.toml 导入，也不能直接链接,所以需要自定义构建脚本
+// 及build.rs 来告知cargo
 
 fn main() {}
 
@@ -48,6 +49,7 @@ mod tests {
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_secs();
+        // 创建了环境变量
         let s = std::env::var("TEST_FOO").unwrap();
         let e: u64 = s.parse().unwrap();
         assert!(timestamp >= e && timestamp < e + 10);

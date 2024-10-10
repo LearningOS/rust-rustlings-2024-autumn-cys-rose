@@ -7,8 +7,6 @@
 // Execute `rustlings hint tests8` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 fn main() {}
 
 #[cfg(test)]
@@ -17,6 +15,7 @@ mod tests {
 
     #[test]
     fn test_success() {
+        // 启动了pass的feature，应该告诉cargo
         #[cfg(feature = "pass")]
         return;
 
