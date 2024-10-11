@@ -1,8 +1,7 @@
 /*
-	heap
-	This question requires you to implement a binary heap function
+    heap
+    This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -37,7 +36,37 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        // 添加元素到最后
+        self.items.push(value);
+        self.count += 1;
+        // 上移新元素，调整堆的结构
+        self.swim(self.count);
+    }
+
+    pub fn swim(&mut self, mut idx: usize) {
+        // 如果当前元素比父元素更优（取决于comparator），交换它们
+        while idx > 1 {
+            let parent = self.parent_idx(idx);
+            if (self.comparator)(&self.items[idx], &self.items[parent]) {
+                self.items.swap(idx, parent);
+                idx = parent;
+            } else {
+                break;
+            }
+        }
+    }
+
+    pub fn sink(&mut self, mut idx: usize) {
+        // 如果有子节点且当前节点比其子节点更差，交换它们
+        while self.children_present(idx) {
+            let child_idx = self.smallest_child_idx(idx);
+            if (self.comparator)(&self.items[child_idx], &self.items[idx]) {
+                self.items.swap(idx, child_idx);
+            } else {
+                break;
+            }
+            idx = child_idx;
+        }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -57,8 +86,20 @@ where
     }
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
-		0
+        let left = self.left_child_idx(idx);
+        let right = self.right_child_idx(idx);
+
+        // 如果没有右子节点，返回左子节点
+        if right > self.count {
+            return left;
+        }
+
+        // 返回更优的子节点（由 comparator 决定）
+        if (self.comparator)(&self.items[left], &self.items[right]) {
+            left
+        } else {
+            right
+        }
     }
 }
 
@@ -84,8 +125,20 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
-		None
+        if self.is_empty() {
+            return None;
+        }
+
+        // 将堆顶元素取出
+        let root = self.items.swap_remove(1);
+        self.count -= 1;
+
+        // 调整堆的结构
+        if !self.is_empty() {
+            self.sink(1);
+        }
+
+        Some(root)
     }
 }
 
